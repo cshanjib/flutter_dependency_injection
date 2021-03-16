@@ -1,3 +1,5 @@
+import 'package:dependency_injection_demo/data/models/quote.dart';
+import 'package:dependency_injection_demo/data/repositories/quote_repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,7 +7,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,29 +26,16 @@ class MyQuotePage extends StatefulWidget {
 }
 
 class _MyQuotePageState extends State<MyQuotePage> {
-  final List _data = [
-    {
-      "tags": ["software engineering", "programming", "design", "marketing"],
-      "quote":
-          "Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.",
-      "lang": "en",
-      "author": "Edsger Wybe Dijkstra"
-    },
-    {
-      "tags": ["science", "short", "ux", "knowledge", "ui", "software"],
-      "quote":
-          "One consequence of reifying deep principles in an interface is that mastering the subject begins to coincide with mastering the interface.",
-      "lang": "en",
-      "author": "Michael Nielsen"
-    },
-    {
-      "tags": ["short", "effective altruism", "impact"],
-      "quote":
-          "If you can help 1000 people be 1% more effective, then that’s like having the impact of 10 people.",
-      "lang": "en",
-      "author": "Ben Todd"
-    }
-  ];
+  QuoteRepository _quoteRepository;
+
+  Future<List> _futureQuote;
+
+  @override
+  void initState() {
+    super.initState();
+    _quoteRepository = QuoteRepository();
+    _futureQuote = _quoteRepository.getQuotes();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,23 +44,34 @@ class _MyQuotePageState extends State<MyQuotePage> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: ListView.builder(
-            itemCount: _data.length,
-            itemBuilder: (context, index) => _quoteItem(_data[index], index),
-          ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+          child: FutureBuilder<List<Quote>>(
+              future: _futureQuote,
+              builder: (context, AsyncSnapshot<List<Quote>> snapData) {
+                if (snapData.connectionState == ConnectionState.waiting) {
+                  return Center(child: Text('Please wait its loading...'));
+                } else {
+                  if (snapData.hasError)
+                    return Center(child: Text('Error: ${snapData.error}'));
+                  else
+                    return ListView.builder(
+                      itemCount: snapData.data.length,
+                      itemBuilder: (context, index) =>
+                          _quoteItem(snapData.data[index], index),
+                    );
+                }
+              }),
+        ));
   }
 
-  _quoteItem(item, index) {
+  Widget _quoteItem(Quote item, index) {
     return ListTile(
       tileColor: index % 2 == 0 ? Colors.white : Colors.grey.withOpacity(0.1),
       title: Text(
-        '"${item["quote"]}"',
+        '"${item.quote}"',
       ),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 10),
-        child: Text('- ${item["author"]}',
+        child: Text('- ${item.author}',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
       ),
     );
