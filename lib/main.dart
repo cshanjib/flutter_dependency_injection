@@ -1,8 +1,11 @@
+import 'package:dependency_injection_demo/config/injectable.dart';
 import 'package:dependency_injection_demo/data/models/quote.dart';
 import 'package:dependency_injection_demo/data/repositories/quote_repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   runApp(MyApp());
 }
 
