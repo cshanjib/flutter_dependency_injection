@@ -2,6 +2,7 @@ import 'package:dependency_injection_demo/config/injectable.dart';
 import 'package:dependency_injection_demo/data/models/quote.dart';
 import 'package:dependency_injection_demo/data/repositories/quote_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,7 @@ class _MyQuotePageState extends State<MyQuotePage> {
   @override
   void initState() {
     super.initState();
-    _quoteRepository = QuoteRepository();
+    _quoteRepository = GetIt.instance.get<QuoteRepository>();
     _futureQuote = _quoteRepository.getQuotes();
   }
 

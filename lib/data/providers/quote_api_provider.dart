@@ -1,4 +1,5 @@
 import 'package:dependency_injection_demo/data/models/quote.dart';
+import 'package:injectable/injectable.dart';
 
 abstract class QuoteApiProvider {
   const QuoteApiProvider();
@@ -6,6 +7,7 @@ abstract class QuoteApiProvider {
   Future<List> getQuotes();
 }
 
+@Singleton(as: QuoteApiProvider)
 class MockQuoteApiProvider implements QuoteApiProvider {
   const MockQuoteApiProvider();
 
