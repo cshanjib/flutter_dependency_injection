@@ -1,16 +1,10 @@
 # dependency_injection_demo
 
-A new Flutter project.
+Dependency Injection is a term that is almost familiar to all the developers if you have been working in Java, rails, etc. This project demonstrates dependency injection in Flutter using Injector and GetIt packages.
 
-## Getting Started
+## Please also check:
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Article: Step by step Demonstration](https://cshanjib.medium.com/dependency-injection-using-injector-and-getit-packages-in-flutter-c3739c2ad5dd)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
