@@ -16,8 +16,11 @@ import '../data/repositories/quote_repository.dart'
 _i1.GetIt $initGetIt(_i1.GetIt get,
     {String environment, _i2.EnvironmentFilter environmentFilter}) {
   final gh = _i2.GetItHelper(get, environment, environmentFilter);
-  gh.factory<_i3.QuoteRepository>(
-      () => _i3.QuoteRepository(provider: get<_i4.QuoteApiProvider>()));
+  gh.factoryParam<_i3.QuoteRepository, dynamic, dynamic>((env, _) =>
+      _i3.QuoteRepository(
+          provider: get<_i4.QuoteApiProvider>(instanceName: 'prod'), env: env));
   gh.singleton<_i4.QuoteApiProvider>(_i4.MockQuoteApiProvider());
+  gh.singleton<_i4.QuoteApiProvider>(_i4.RealQuoteApiProvider(),
+      instanceName: 'prod');
   return get;
 }

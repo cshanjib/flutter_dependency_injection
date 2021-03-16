@@ -37,7 +37,7 @@ class _MyQuotePageState extends State<MyQuotePage> {
   @override
   void initState() {
     super.initState();
-    _quoteRepository = GetIt.instance.get<QuoteRepository>();
+    _quoteRepository = GetIt.instance.get<QuoteRepository>(param1: "testing");
     _futureQuote = _quoteRepository.getQuotes();
   }
 

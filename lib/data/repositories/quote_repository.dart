@@ -4,11 +4,14 @@ import 'package:injectable/injectable.dart';
 @injectable
 class QuoteRepository {
   final QuoteApiProvider _provider;
+  final String _env;
 
-  const QuoteRepository({QuoteApiProvider provider})
-      : _provider = provider;
+  const QuoteRepository(
+      {@Named("prod") QuoteApiProvider provider, @factoryParam env})
+      : _env = env,
+        _provider = provider;
 
   Future<List> getQuotes() {
-    return _provider.getQuotes();
+    return _provider.getQuotes(_env);
   }
 }
